@@ -100,7 +100,6 @@ func ValidateLockfile(lf *Lockfile) error{
 				return errors.New("package " + pkgID + " dependency name mismatch: expected " + depName + ", got " + depPkg.Name)
 			}
 		}
-
 	}
 
 
