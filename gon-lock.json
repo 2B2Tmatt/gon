@@ -1,60 +1,60 @@
 {
-  "lockfileVersion": 1,
-  "registry": "https://registry.npmjs.org",
-  "rootDeps": {
-    "react": "react@18.3.1",
-    "lodash": "lodash@4.17.21"
+ "lockfileVersion": 1,
+ "registry": "https://registry.npmjs.org",
+ "rootDeps": {
+  "lodash": "lodash@4.17.21",
+  "react": "react@18.3.1"
+ },
+ "packages": {
+  "ansi-styles@6.2.1": {
+   "name": "ansi-styles",
+   "version": "6.2.1",
+   "tarballURL": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.1.tgz",
+   "integrity": "68f0e73d3f2e9b794a388dc7f4e9a198270273a0bca48cd68dcf9e08cf3c5d18",
+   "deps": {}
   },
-  "packages": {
-    "react@18.3.1": {
-      "name": "react",
-      "version": "18.3.1",
-      "tarballURL": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
-      "integrity": "sha512-FAKE_REACT_HASH",
-      "deps": {
-        "loose-envify": "loose-envify@1.4.0"
-      }
-    },
-    "loose-envify@1.4.0": {
-      "name": "loose-envify",
-      "version": "1.4.0",
-      "tarballURL": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
-      "integrity": "sha512-FAKE_LOOSE_ENVIFY_HASH",
-      "deps": {
-        "js-tokens": "js-tokens@4.0.0"
-      }
-    },
-    "js-tokens@4.0.0": {
-      "name": "js-tokens",
-      "version": "4.0.0",
-      "tarballURL": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
-      "integrity": "sha512-FAKE_JS_TOKENS_HASH",
-      "deps": {}
-    },
-    "lodash@4.17.21": {
-      "name": "lodash",
-      "version": "4.17.21",
-      "tarballURL": "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz",
-      "integrity": "sha512-FAKE_LODASH_HASH",
-      "deps": {
-        "chalk": "chalk@5.3.0"
-      }
-    },
-    "chalk@5.3.0": {
-      "name": "chalk",
-      "version": "5.3.0",
-      "tarballURL": "https://registry.npmjs.org/chalk/-/chalk-5.3.0.tgz",
-      "integrity": "sha512-FAKE_CHALK_HASH",
-      "deps": {
-        "ansi-styles": "ansi-styles@6.2.1"
-      }
-    },
-    "ansi-styles@6.2.1": {
-      "name": "ansi-styles",
-      "version": "6.2.1",
-      "tarballURL": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.1.tgz",
-      "integrity": "sha512-FAKE_ANSI_STYLES_HASH",
-      "deps": {}
-    }
+  "chalk@5.3.0": {
+   "name": "chalk",
+   "version": "5.3.0",
+   "tarballURL": "https://registry.npmjs.org/chalk/-/chalk-5.3.0.tgz",
+   "integrity": "02ae1fe87987a93d08098699e0dd5a029ecd0f81466d497de5c9262077e232e9",
+   "deps": {
+    "ansi-styles": "ansi-styles@6.2.1"
+   }
+  },
+  "js-tokens@4.0.0": {
+   "name": "js-tokens",
+   "version": "4.0.0",
+   "tarballURL": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
+   "integrity": "d884c7a2d8adb5568c1272d92b4f9c62707f4226cf9e7b22e7b957c7361e3c53",
+   "deps": {}
+  },
+  "lodash@4.17.21": {
+   "name": "lodash",
+   "version": "4.17.21",
+   "tarballURL": "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz",
+   "integrity": "6a087ac9e5702a0c9d60fbcd48696012646ec8df1491dea472b150e79fcaf804",
+   "deps": {
+    "chalk": "chalk@5.3.0"
+   }
+  },
+  "loose-envify@1.4.0": {
+   "name": "loose-envify",
+   "version": "1.4.0",
+   "tarballURL": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
+   "integrity": "1218830a93538a4f730d530138e945ea6a65b45e099ee7a9ea538a05141babdc",
+   "deps": {
+    "js-tokens": "js-tokens@4.0.0"
+   }
+  },
+  "react@18.3.1": {
+   "name": "react",
+   "version": "18.3.1",
+   "tarballURL": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+   "integrity": "8d9bed01a672e7eaf387942d781ad47c6a43089a30a0306060f9fd5ac7870347",
+   "deps": {
+    "loose-envify": "loose-envify@1.4.0"
+   }
   }
+ }
 }

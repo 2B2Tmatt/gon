@@ -3,6 +3,7 @@ package lock
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"os"
 )
 
@@ -10,7 +11,7 @@ type Lockfile struct {
 	LockFileVersion  int                `json:"lockfileVersion"`
 	Registry         string             `json:"registry"`
 	RootDependencies map[string]string  `json:"rootDeps"`
-	Packages         map[string]Package `json:"packages"`
+	Packages         map[string]*Package `json:"packages"`
 }
 
 type Package struct {
@@ -35,7 +36,7 @@ func ReadLockFile(filepath string) (*Lockfile, error) {
 		lf.RootDependencies = make(map[string]string)
 	}
 	if lf.Packages == nil{
-		lf.Packages = make(map[string]Package)
+		lf.Packages = make(map[string]*Package)
 	}
 	err = ValidateLockfile(&lf)
 	if err != nil{ 
@@ -56,6 +57,21 @@ func EncodeLockFile(lf *Lockfile) ([]byte, error) {
 	
 
 	return bytes, nil 
+}
+
+func (lf *Lockfile) SaveAtomic(path string) error{
+	bytes, err := EncodeLockFile(lf)
+	if err != nil{
+		return err 
+	}
+
+	err = os.WriteFile(path, bytes, 0644)
+	if err != nil{
+		return err
+	}
+
+	log.Println(path + " successfully updated")
+	return nil
 }
 
 func ValidateLockfile(lf *Lockfile) error{
@@ -87,10 +103,7 @@ func ValidateLockfile(lf *Lockfile) error{
 		}
 		if pkg.TarballURL == ""{
 			return errors.New("package " + pkgID + " has missing tarbalURL")
-		}
-		if pkg.Integrity == ""{
-			return errors.New("package " + pkgID + " missing integrity")
-		}
+		}	
 		for depName, depID := range pkg.Deps{
 			depPkg, exists := lf.Packages[depID]
 			if !exists{

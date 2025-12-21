@@ -43,4 +43,14 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+
+	tgzSrc := make([]nw.Tgz, 0) 
+	for _, pkg := range lf.Packages{
+		tgzSrc = append(tgzSrc, nw.Tgz{Name:pkg.Name, Path: fmt.Sprintf("./.gon/cache/tarballs/%s.tgz", pkg.Integrity)})
+	}
+	err = nw.ExtractAll("./.gon/extract/", tgzSrc)
+	if err != nil{
+		fmt.Println(err)
+		return
+	}
 }

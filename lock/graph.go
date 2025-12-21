@@ -25,7 +25,7 @@ func (lf * Lockfile) GetPackage(pkgID string) *Package{
 	if !exists{
 		return nil
 	}
-	return &pkg
+	return pkg
 }
 
 func (lf *Lockfile) GetDepIDs(pkgID string) []string{
