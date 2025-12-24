@@ -71,7 +71,7 @@ func (nw *Networker) Fetch(pkgID string) (bool, string, string, error) {
 	if err != nil {
 		return false, "", "", err
 	}
-	hashString := base64.StdEncoding.EncodeToString(hasher.Sum(nil))
+	hashString := "sha512-" + base64.StdEncoding.EncodeToString(hasher.Sum(nil))
 
 	if pkg.Integrity != "" && pkg.Integrity != hashString {
 		return false, "", "", errors.New("pkg: " + pkgID + " failed integrity test")
