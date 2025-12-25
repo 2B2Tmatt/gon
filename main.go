@@ -12,5 +12,8 @@ func main() {
 		return
 	}
 
-	cli.Dispatch()
+	err = cli.Dispatch()
+	if err != nil {
+		fmt.Println("dispatch failed, error:", err)
+	}
 }

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"gon/lock"
+	nw "gon/networking"
 	"io"
 	"net/http"
 	"os"
@@ -187,7 +188,10 @@ func runAdd(cli *Cli) error {
 
 func runInstall(cli *Cli) error {
 	fmt.Println("Install dispatch")
-	cli.ResolveAll()
+	err := cli.ResolveAll()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -249,7 +253,7 @@ func (cli *Cli) ResolveAll() error {
 		}
 	}
 	fmt.Println("Resolved all Packages")
-	fmt.Println("Installing")
+	fmt.Println("Installing...")
 	bytes, err = json.MarshalIndent(cli.Lf, "", " ")
 	if err != nil {
 		return err
@@ -258,9 +262,33 @@ func (cli *Cli) ResolveAll() error {
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("Finished writing")
-
+	rootIDs := lock.GetRootIDs(cli.Lf)
+	pkgIDs, err := lf.WalkAll(rootIDs)
+	if err != nil {
+		return err
+	}
+	for _, pkgID := range pkgIDs {
+		fmt.Println("pkgID: " + pkgID)
+	}
+	networker := nw.GenerateNetworker(cli.Lf, cli.Client)
+	err = networker.FetchAll(pkgIDs)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Finished Installing")
+	fmt.Println("Extracting files...")
+	tgzSrc := make([]nw.Tgz, 0)
+	for _, pkg := range cli.Lf.Packages {
+		tgzSrc = append(tgzSrc, nw.Tgz{
+			Name: pkg.Name,
+			Path: fmt.Sprintf("./.gon/cache/tarballs/%s.tgz", nw.IntegrityToFilenameKey(pkg.Integrity)),
+		})
+	}
+	err = nw.ExtractAll("./.gon/extract/", tgzSrc)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Finished Extracting")
 	return nil
 }
 

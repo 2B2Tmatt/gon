@@ -10,7 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
+	"strings"
 )
 
 type Networker struct {
@@ -18,9 +18,9 @@ type Networker struct {
 	Lockfile *lock.Lockfile
 }
 
-func GenerateNetworker(lf *lock.Lockfile) *Networker {
+func GenerateNetworker(lf *lock.Lockfile, client *http.Client) *Networker {
 	return &Networker{
-		Client:   &http.Client{Timeout: time.Duration(15) * time.Second},
+		Client:   client,
 		Lockfile: lf,
 	}
 }
@@ -83,6 +83,7 @@ func (nw *Networker) Fetch(pkgID string) (bool, string, string, error) {
 }
 
 func (nw *Networker) Promote(tempPath, hash string) error {
+	hash = IntegrityToFilenameKey(hash)
 	cachePath := fmt.Sprintf("./.gon/cache/tarballs/%s.tgz", hash)
 	_, err := os.Stat(cachePath)
 	if err == nil {
@@ -125,4 +126,18 @@ func (nw *Networker) FetchAll(order []string) error {
 	nw.Lockfile.SaveAtomic("gon-lock.json")
 
 	return nil
+}
+
+func IntegrityToFilenameKey(integrity string) string {
+	const prefix = "sha512-"
+	if !strings.HasPrefix(integrity, prefix) {
+		return strings.ReplaceAll(integrity, "/", "_") // fallback
+	}
+	b64 := strings.TrimPrefix(integrity, prefix)
+
+	b64 = strings.ReplaceAll(b64, "/", "_")
+	b64 = strings.ReplaceAll(b64, "+", "-")
+	b64 = strings.TrimRight(b64, "=")
+
+	return "sha512-" + b64
 }
